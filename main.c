@@ -13,15 +13,18 @@ EAPI_MAIN int
 elm_main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
 {
     Evas_Object *win;
-    Evas_Object *bg;
+    Evas_Object *ly;
 
     win = elm_win_add(NULL, "main", ELM_WIN_BASIC);
     elm_win_title_set(win, "EFL Demo");
     evas_object_smart_callback_add(win, "delete,request", _win_del, NULL);
 
-    bg = elm_bg_add(win);
-    elm_win_resize_object_add(win, bg);
-    evas_object_show(bg);
+    ly = elm_layout_add(win);
+    elm_layout_file_set(ly,
+                        PACKAGE_DATA_DIR"/themes/default/default.edj",
+                        "layout");
+    elm_win_resize_object_add(win, ly);
+    evas_object_show(ly);
 
     evas_object_resize(win, 800, 600);
     evas_object_show(win);
