@@ -13,6 +13,17 @@ struct _Carrousel_Item
     const char *filename;
 };
 
+static const char *files[] = {
+    "fightclub.jpg",
+    "forrestgump.jpg",
+    "godfather.png",
+    "inception.jpg",
+    "pulpfiction.jpg",
+    "thedarkknight.jpg",
+    "titanic.jpg",
+    "volaudessus.jpg"
+};
+
 Evas_Object *
 carrousel_add(Evas_Object *parent)
 {
