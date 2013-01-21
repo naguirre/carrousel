@@ -17,6 +17,9 @@ PKG_CHECK_MODULES([CARROUSEL], [elementary >= 1.0.0])
 
 AC_CONFIG_FILES([
 Makefile
+data/Makefile
+data/themes/Makefile
+data/themes/default/Makefile
 ])
 
 AC_OUTPUT

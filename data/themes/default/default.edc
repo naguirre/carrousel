@@ -1,0 +1,31 @@
+collections {
+
+   images {
+      image: "bg.png" COMP;
+   }
+
+   group {
+      name: "layout";
+      min: 800 600;
+      max: 800 600;
+      parts {
+         part {
+            name: "bg";
+            type: IMAGE;
+            description {
+               image.normal: "bg.png";
+            }
+         }
+         part {
+            name: "caroussel.swallow";
+            type: SWALLOW;
+            mouse_events: 1;
+            description {
+               state: "default" 0.0;
+            }
+         }
+
+      }
+
+   }
+}

@@ -1,5 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
+SUBDIRS = data
+
 MAINTAINERCLEANFILES = \
 Makefile.in \
 aclocal.m4 \
