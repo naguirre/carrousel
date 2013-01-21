@@ -2,11 +2,34 @@
 
 #ifndef ELM_LIB_QUICKLAUNCH
 
+static void
+_win_del(void *data EINA_UNUSED, Evas_Object *obj EINA_UNUSED, void *event_info EINA_UNUSED)
+{
+    elm_exit();
+}
+
+
 EAPI_MAIN int
 elm_main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
 {
-    printf("Hello Elementary World\n");
-    return 0;
+    Evas_Object *win;
+    Evas_Object *bg;
+
+    win = elm_win_add(NULL, "main", ELM_WIN_BASIC);
+    elm_win_title_set(win, "EFL Demo");
+    evas_object_smart_callback_add(win, "delete,request", _win_del, NULL);
+
+    bg = elm_bg_add(win);
+    elm_win_resize_object_add(win, bg);
+    evas_object_show(bg);
+
+    evas_object_resize(win, 800, 600);
+    evas_object_show(win);
+    
+    elm_run();
+
+    elm_shutdown();
+    return EXIT_SUCCESS;
 }
 
 #endif
