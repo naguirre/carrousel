@@ -1,5 +1,7 @@
 #include <Elementary.h>
 
+#include "carrousel.h"
+
 #ifndef ELM_LIB_QUICKLAUNCH
 
 static void
@@ -14,6 +16,7 @@ elm_main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
 {
     Evas_Object *win;
     Evas_Object *ly;
+    Evas_Object *carrousel;
 
     win = elm_win_add(NULL, "main", ELM_WIN_BASIC);
     elm_win_title_set(win, "EFL Demo");
@@ -25,6 +28,10 @@ elm_main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
                         "layout");
     elm_win_resize_object_add(win, ly);
     evas_object_show(ly);
+
+    carrousel = carrousel_add(ly);
+    evas_object_show(carrousel);
+    elm_object_part_content_set(ly, "caroussel.swallow", carrousel);
 
     evas_object_resize(win, 800, 600);
     evas_object_show(win);
