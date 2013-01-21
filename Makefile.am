@@ -39,7 +39,8 @@ AM_CPPFLAGS = \
 bin_PROGRAMS = carrousel
 
 carrousel_SOURCES = \
-main.c
+main.c \
+carrousel.c
 
 carrousel_LDADD = \
 @CARROUSEL_LIBS@
