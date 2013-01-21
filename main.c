@@ -1,7 +1,14 @@
 #include <Elementary.h>
 
-int main(int argc, char **argv)
+#ifndef ELM_LIB_QUICKLAUNCH
+
+EAPI_MAIN int
+elm_main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
 {
-    printf("Hello E World\n");
+    printf("Hello Elementary World\n");
     return 0;
 }
+
+#endif
+
+ELM_MAIN()
