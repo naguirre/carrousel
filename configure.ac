@@ -20,6 +20,7 @@ Makefile
 data/Makefile
 data/themes/Makefile
 data/themes/default/Makefile
+data/images/Makefile
 ])
 
 AC_OUTPUT
