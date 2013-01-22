@@ -1,6 +1,6 @@
 MAINTAINERCLEANFILES = Makefile.in
 
-filesdir = $(datadir)/efl-demo/images
+filesdir = $(datadir)/carrousel/images
 files_DATA = \
     fightclub.jpg\
     forrestgump.jpg\
