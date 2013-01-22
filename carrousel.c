@@ -34,7 +34,6 @@ carrousel_add(Evas_Object *parent)
     int i;
     Evas_Object *grid;
     Carrousel_Item *item;
-    char buf[PATH_MAX];
 
     grid =  elm_grid_add(parent);
     elm_grid_size_set(grid, 800, 600);
