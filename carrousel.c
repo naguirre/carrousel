@@ -34,11 +34,26 @@ static const char *files[] = {
 
 static Eina_List *items = NULL;
 
+static int _compare_z(const void *data1, const void *data2)
+{
+    int d1 = evas_object_data_get(data1, "scale");
+    int d2 = evas_object_data_get(data2, "scale");
+
+    if (d1 > d2)
+        return 1;
+    else if (d1 < d2)
+        return -1;
+    else
+        return 0;
+}
+
 static Eina_Bool
 _anim(void)
 {
     Carrousel_Item *item;
     Eina_List *l;
+    Eina_List *z = NULL;
+    Evas_Object *obj;
     Evas_Coord x, y, w, h;
     double scale = 0.0;
 
@@ -50,8 +65,15 @@ _anim(void)
         w = ICON_SIZE_W * scale;
         h = ICON_SIZE_H * scale;
         elm_grid_pack_set(item->obj, x, y, w, h);
+
+        evas_object_data_set(item->obj, "scale", (void*)(long)(scale*1000));
+        z = eina_list_sorted_insert(z, _compare_z, item->obj);
+
     }
  
+    EINA_LIST_FREE(z, obj)
+        evas_object_raise(obj);
+
     return ECORE_CALLBACK_RENEW;
 }
 
