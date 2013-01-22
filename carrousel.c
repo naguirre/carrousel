@@ -4,6 +4,10 @@
 
 #define NB_ITEMS 7
 
+#define ICON_SIZE_W 64
+#define ICON_SIZE_H 96
+#define WIDTH 800
+#define HEIGHT 600
 typedef struct _Carrousel_Item Carrousel_Item;
 
 struct _Carrousel_Item
