@@ -2,7 +2,7 @@
 
 #include "carrousel.h"
 
-#define NB_ITEMS 7
+#define NB_ITEMS 8
 
 #define ICON_SIZE_W 64
 #define ICON_SIZE_H 96
@@ -65,7 +65,7 @@ carrousel_add(Evas_Object *parent)
     grid =  elm_grid_add(parent);
     elm_grid_size_set(grid, 800, 600);
 
-    for (i = NB_ITEMS ; i >= 0; i--)
+    for (i = NB_ITEMS -1 ; i >= 0; i--)
     {
         item = calloc(1, sizeof(Carrousel_Item));
         item->parent = grid;
