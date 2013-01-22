@@ -15,12 +15,20 @@ AC_PROG_CC
 PKG_PROG_PKG_CONFIG
 PKG_CHECK_MODULES([CARROUSEL], [elementary >= 1.0.0])
 
+# Check for presence of pdfLaTeX
+AC_CHECK_PROG(PDFLATEX, pdflatex, pdflatex)
+if test -z "$PDFLATEX"; then
+  AC_MSG_WARN([Unable to create PDF version of the user manual.])
+fi
+AM_CONDITIONAL([HAVE_PDFLATEX], test -n "$PDFLATEX")
+
 AC_CONFIG_FILES([
 Makefile
 data/Makefile
 data/themes/Makefile
 data/themes/default/Makefile
 data/images/Makefile
+doc/Makefile
 ])
 
 AC_OUTPUT

@@ -1,6 +1,6 @@
 ## Process this file with automake to produce Makefile.in
 
-SUBDIRS = data
+SUBDIRS = data doc
 
 MAINTAINERCLEANFILES = \
 Makefile.in \
