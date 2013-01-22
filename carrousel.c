@@ -45,7 +45,7 @@ carrousel_add(Evas_Object *parent)
         item->parent = grid;
         item->obj = elm_layout_add(grid);
         elm_layout_file_set(item->obj, PACKAGE_DATA_DIR"/themes/default/default.edj",
-                            "caroussel/layout/item");
+                            "carrousel/layout/item");
         evas_object_show(item->obj);
         elm_grid_pack(grid, item->obj, 0, 0, 0, 0);
 
