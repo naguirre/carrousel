@@ -8,6 +8,8 @@
 #define ICON_SIZE_H 96
 #define WIDTH 800
 #define HEIGHT 600
+#define PADDING 32
+
 typedef struct _Carrousel_Item Carrousel_Item;
 
 struct _Carrousel_Item
@@ -38,14 +40,16 @@ _anim(void)
     Carrousel_Item *item;
     Eina_List *l;
     Evas_Coord x, y, w, h;
+    int i = 0;
 
     EINA_LIST_FOREACH(items, l, item)
     {
-        y = (HEIGHT / 2) - (ICON_SIZE_H / 2);
-        x = (WIDTH  / 2) - (ICON_SIZE_W / 2);
+        y = HEIGHT / 2 - ICON_SIZE_H / 2;
+        x = PADDING + i * (ICON_SIZE_W + PADDING);
         w = ICON_SIZE_W;
         h = ICON_SIZE_H;
         elm_grid_pack_set(item->obj, x, y, w, h);
+        i++;
     }
 
     return ECORE_CALLBACK_RENEW;
