@@ -26,6 +26,7 @@ static const char *files[] = {
     "volaudessus.jpg"
 };
 
+static Eina_List *items = NULL;
 
 
 Evas_Object *
@@ -48,6 +49,7 @@ carrousel_add(Evas_Object *parent)
         evas_object_show(item->obj);
         elm_grid_pack(grid, item->obj, 0, 0, 0, 0);
 
+        items = eina_list_append(items, item);
     }
     return grid;
 }
