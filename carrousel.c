@@ -33,7 +33,6 @@ carrousel_add(Evas_Object *parent)
 {
     int i;
     Evas_Object *grid;
-    Evas_Object *ly;
     Carrousel_Item *item;
     char buf[PATH_MAX];
 
