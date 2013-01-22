@@ -4,8 +4,8 @@
 
 #define NB_ITEMS 8
 
-#define ICON_SIZE_W 64
-#define ICON_SIZE_H 96
+#define ICON_SIZE_W 128
+#define ICON_SIZE_H 192
 #define WIDTH 800
 #define HEIGHT 600
 #define PADDING 32
@@ -40,18 +40,18 @@ _anim(void)
     Carrousel_Item *item;
     Eina_List *l;
     Evas_Coord x, y, w, h;
-    int i = 0;
+    double scale = 0.0;
 
     EINA_LIST_FOREACH(items, l, item)
     {
-        y = HEIGHT / 2 - ICON_SIZE_H / 2;
-        x = PADDING + i * (ICON_SIZE_W + PADDING);
-        w = ICON_SIZE_W;
-        h = ICON_SIZE_H;
+        scale = 0.5 + (1.0 + cos(item->angle)) / 2.0;
+        y =  128 * scale;
+        x = WIDTH / 2.0 + (sin(item->angle) * (WIDTH / 2.0)) - ICON_SIZE_W  / 2.0;
+        w = ICON_SIZE_W * scale;
+        h = ICON_SIZE_H * scale;
         elm_grid_pack_set(item->obj, x, y, w, h);
-        i++;
     }
-
+ 
     return ECORE_CALLBACK_RENEW;
 }
 
@@ -63,6 +63,8 @@ carrousel_add(Evas_Object *parent)
     Evas_Object *img;
     Carrousel_Item *item;
     char buf[PATH_MAX];
+    double theta_inc = (double)(2 * M_PI) / (double)NB_ITEMS;
+    double theta = 0;
 
     grid =  elm_grid_add(parent);
     elm_grid_size_set(grid, 800, 600);
@@ -82,6 +84,8 @@ carrousel_add(Evas_Object *parent)
 
         evas_object_show(item->obj);
         elm_grid_pack(grid, item->obj, 0, 0, 0, 0);
+        item->angle =  theta;
+        theta += theta_inc;
 
         items = eina_list_append(items, item);
     }
