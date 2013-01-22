@@ -33,6 +33,7 @@ static const char *files[] = {
 };
 
 static Eina_List *items = NULL;
+static double start = 0.0;
 
 static int _compare_z(const void *data1, const void *data2)
 {
@@ -48,7 +49,7 @@ static int _compare_z(const void *data1, const void *data2)
 }
 
 static Eina_Bool
-_anim(void)
+_anim(double t)
 {
     Carrousel_Item *item;
     Eina_List *l;
@@ -59,9 +60,9 @@ _anim(void)
 
     EINA_LIST_FOREACH(items, l, item)
     {
-        scale = 0.5 + (1.0 + cos(item->angle)) / 2.0;
+        scale = 0.5 + (1.0 + cos(item->angle + t)) / 2.0;
         y =  128 * scale;
-        x = WIDTH / 2.0 + (sin(item->angle) * (WIDTH / 2.0)) - ICON_SIZE_W  / 2.0;
+        x = WIDTH / 2.0 + (sin(item->angle + t) * (WIDTH / 2.0)) - ICON_SIZE_W  / 2.0;
         w = ICON_SIZE_W * scale;
         h = ICON_SIZE_H * scale;
         elm_grid_pack_set(item->obj, x, y, w, h);
@@ -75,6 +76,13 @@ _anim(void)
         evas_object_raise(obj);
 
     return ECORE_CALLBACK_RENEW;
+}
+
+static Eina_Bool
+_anim_cb(void *data)
+{
+    _anim(ecore_loop_time_get());
+    return EINA_TRUE;
 }
 
 Evas_Object *
@@ -112,7 +120,7 @@ carrousel_add(Evas_Object *parent)
         items = eina_list_append(items, item);
     }
 
-    _anim();
+    ecore_animator_add(_anim_cb, NULL);
 
     return grid;
 }
