@@ -32,6 +32,24 @@ static const char *files[] = {
 
 static Eina_List *items = NULL;
 
+static Eina_Bool
+_anim(void)
+{
+    Carrousel_Item *item;
+    Eina_List *l;
+    Evas_Coord x, y, w, h;
+
+    EINA_LIST_FOREACH(items, l, item)
+    {
+        y = (HEIGHT / 2) - (ICON_SIZE_H / 2);
+        x = (WIDTH  / 2) - (ICON_SIZE_W / 2);
+        w = ICON_SIZE_W;
+        h = ICON_SIZE_H;
+        elm_grid_pack_set(item->obj, x, y, w, h);
+    }
+
+    return ECORE_CALLBACK_RENEW;
+}
 
 Evas_Object *
 carrousel_add(Evas_Object *parent)
@@ -55,5 +73,8 @@ carrousel_add(Evas_Object *parent)
 
         items = eina_list_append(items, item);
     }
+
+    _anim();
+
     return grid;
 }
