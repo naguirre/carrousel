@@ -31,7 +31,7 @@ elm_main(int argc EINA_UNUSED, char **argv EINA_UNUSED)
 
     carrousel = carrousel_add(ly);
     evas_object_show(carrousel);
-    elm_object_part_content_set(ly, "caroussel.swallow", carrousel);
+    elm_object_part_content_set(ly, "carrousel.swallow", carrousel);
 
     evas_object_resize(win, 800, 600);
     evas_object_show(win);

@@ -18,7 +18,7 @@ collections {
             }
          }
          part {
-            name: "caroussel.swallow";
+            name: "carrousel.swallow";
             type: SWALLOW;
             mouse_events: 1;
             description {
@@ -30,7 +30,7 @@ collections {
    }
 
    group {
-      name: "caroussel/layout/item";
+      name: "carrousel/layout/item";
       parts {
          part {
             name: "cover.bg";
