@@ -60,7 +60,9 @@ carrousel_add(Evas_Object *parent)
 {
     int i;
     Evas_Object *grid;
+    Evas_Object *img;
     Carrousel_Item *item;
+    char buf[PATH_MAX];
 
     grid =  elm_grid_add(parent);
     elm_grid_size_set(grid, 800, 600);
@@ -72,6 +74,12 @@ carrousel_add(Evas_Object *parent)
         item->obj = elm_layout_add(grid);
         elm_layout_file_set(item->obj, PACKAGE_DATA_DIR"/themes/default/default.edj",
                             "carrousel/layout/item");
+        snprintf(buf, sizeof(buf), PACKAGE_DATA_DIR"/images/%s",  files[i % 7]);
+        img = evas_object_image_filled_add(evas_object_evas_get(item->obj));
+        item->img = img;
+        evas_object_image_file_set(img, buf, NULL);
+        elm_object_part_content_set(item->obj, "cover.swallow", img);
+
         evas_object_show(item->obj);
         elm_grid_pack(grid, item->obj, 0, 0, 0, 0);
 
