@@ -37,7 +37,7 @@ carrousel_add(Evas_Object *parent)
     char buf[PATH_MAX];
 
     grid =  elm_grid_add(parent);
-    evas_object_grid_size_set(grid, 800, 600);
+    elm_grid_size_set(grid, 800, 600);
 
     for (i = NB_ITEMS ; i >= 0; i--)
     {
