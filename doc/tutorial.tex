@@ -1,7 +1,5 @@
 \documentclass{beamer}
 \usetheme{default}
-\usepackage{tikz}
-\usetikzlibrary{shapes.callouts,shadows, calc}
 \usepackage{thumbpdf}
 \usepackage{wasysym}
 \usepackage{ucs}
@@ -41,37 +39,6 @@
   tabsize=2,                      % sets default tabsize to 2 spaces
   title=\lstname                  % show the filename of files included with \lstinputlisting; also try caption instead of title
 }
-
-\tikzset{note/.style={rectangle callout, rounded corners,fill=gray!20,drop shadow,font=\footnotesize}}    
-
-\newcommand{\tikzmark}[1]{\tikz[overlay,remember picture] \node (#1) {};}    
-
-\newcounter{image}
-\setcounter{image}{1}
-
-\makeatletter
-\newenvironment{btHighlight}[1][]
-{\begingroup\tikzset{bt@Highlight@par/.style={#1}}\begin{lrbox}{\@tempboxa}}
-{\end{lrbox}\bt@HL@box[bt@Highlight@par]{\@tempboxa}\endgroup}
-
-\newcommand\btHL[1][]{%
-  \begin{btHighlight}[#1]\bgroup\aftergroup\bt@HL@endenv%
-}
-\def\bt@HL@endenv{%
-  \end{btHighlight}%   
-  \egroup
-}
-\newcommand{\bt@HL@box}[2][]{%
-  \tikz[#1]{%
-    \pgfpathrectangle{\pgfpoint{0pt}{0pt}}{\pgfpoint{\wd #2}{\ht #2}}%
-    \pgfusepath{use as bounding box}%
-    \node[anchor=base west,rounded corners, fill=green!30,outer sep=0pt,inner xsep=0.2em, inner ysep=0.1em,  #1](a\theimage){\usebox{#2}};
-  }%
-   %\tikzmark{a\theimage} <= can be used, but it leads to a spacing problem
-   % the best approach is to name the previous node with (a\theimage)
- \stepcounter{image}
-}
-\makeatother
 
 
 \lstset{language=C,
