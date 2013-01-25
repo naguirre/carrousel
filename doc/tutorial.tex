@@ -1,5 +1,5 @@
 \documentclass{beamer}
-\usetheme{Warsaw}
+\usetheme{default}
 \usepackage{tikz}
 \usetikzlibrary{shapes.callouts,shadows, calc}
 \usepackage{thumbpdf}
@@ -312,6 +312,7 @@ elm_grid_pack(grid, item->obj, 0, 0, 0, 0);
 Les éléments du carrousel sont des elm\_layouts basés sur un groupe edje : ``caroussel/layout/item''.
 On créé dans un premier temps 8 Objets que l'on place a l'écran. L'affichage a l'écran se fait dans la fonction \_anim(). Tous les objets créés sont ajoutés dans un Eina List.
 \end{frame}
+
 \begin{frame}[fragile]{la fonction \_anim}
 \begin{lstlisting}
 static Eina_Bool
@@ -369,8 +370,91 @@ elm_object_part_content_set(item->obj, "cover.swallow", img);
 \end{frame}
 
 \section{Ajoutons de la pseudo 3D}
-\begin{frame}[fragile]{Rappel trigo}
 
+
+\begin{frame}[fragile]{Rappel trigo}
+\includegraphics[width=8cm]{trigo.eps}
 \end{frame}
+
+
+\begin{frame}[fragile]{Rappel trigo}
+\includegraphics[width=8cm]{cosa.eps}
+\end{frame}
+
+\begin{frame}[fragile]{Rappel trigo}
+\includegraphics[width=8cm]{cosb.eps}
+\end{frame}
+
+\begin{frame}[fragile]{Facteur d'echelle des pochettes}
+Les pochettes sont soumis a un facteur multiplicateur. La taille des pochettes varie entre 
+0.5 x taille et 1.5 x taille.\\
+\begin{lstlisting}
+scale = 0.5 + (1.0 + cos(item->angle + t)) / 2.0;
+...
+w = ICON_SIZE_W * scale;
+h = ICON_SIZE_H * scale;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Position en X}
+La position des pochettes sur l'axe X est la projection des pochettes sur un plan. La position du centre des pochettes est donc fonction du sinus de l'angle.
+\begin{lstlisting}
+x = WIDTH / 2.0 + (sin(item->angle + t) * (WIDTH / 2.0)) - ICON_SIZE_W  / 2.0;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Position en Y}
+La position en y pourrait être calcullée en fonction du cosinus de l'angle. On choisis ici un calcul plus simple en réutilisant la valeur de scale calculée précédement.
+\begin{lstlisting}
+y =  128 * scale;
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Probléme de positionnement en z}
+Les pochettes sont maintenant bien positionnées, mais ne sont pas ordonnées correctement, visuellement certaines devraient se retrouver derriére certaines autres.\\
+Pour positionner correctement les pochettes nous allons utiliser le scale de chaque pochette.\\
+Plus le scale est faible, plus la pochette et loin.\\
+Nous trions donc la liste des objets en fonction du scale a l'aide de la fonction eina\_list\_sorted\_insert.\\
+Puis on parcours la liste est on ordonne en utilisant evas\_object\_raise.
+\end{frame}
+
+\begin{frame}[fragile]{Fonction de tri}
+\begin{lstlisting}
+static int _compare_z(const void *data1, const void *data2)
+{
+    int d1 = evas_object_data_get(data1, "scale");
+    int d2 = evas_object_data_get(data2, "scale");
+
+    if (d1 > d2)
+        return 1;
+    else if (d1 < d2)
+        return -1;
+    else
+        return 0;
+}
+...
+z = eina_list_sorted_insert(z, _compare_z, item->obj);
+...
+EINA_LIST_FREE(z, obj)
+    evas_object_raise(obj);
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Animons le tout}
+Crééons un ecore animator, qui va executer une callback au framerate défini dans ecore, par défaut à 30FPS.
+\begin{lstlisting}
+ecore_animator_add(_anim_cb, NULL);
+\end{lstlisting}
+la fonction \_anim prends maintenant un paramétre de type double : t. Ce parramétre est le temps courrant, ce qui permet d'animer notre carrousel en ajoutant cette valeur a l'angle des objets dans les calculs de cosinus et sinus.
+\begin{lstlisting}
+static Eina_Bool
+_anim_cb(void *data)
+{
+    _anim(ecore_loop_time_get());
+    return EINA_TRUE;
+}
+\end{lstlisting}
+\end{frame}
+
 
 \end{document}
