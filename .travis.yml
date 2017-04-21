@@ -1,6 +1,6 @@
 language: c
 compile:
-  - clang
+  - gcc
 
 env:
   - PKG_CONFIG_PATH=${HOME}/usr/lib/pkg-config
