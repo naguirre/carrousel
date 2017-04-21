@@ -1,0 +1,19 @@
+language: c
+compile:
+  - clang
+
+env:
+  - PKG_CONFIG_PATH=${HOME}/usr/lib/pkg-config
+
+before_install:
+  - sudo apt-get -qq update
+  - sudo apt-get install -y libmosquitto-dev libjansson-dev libsqlite3-dev
+
+install:
+  - wget -o efl_usr.tar.xz https://enna.me/owncloud/index.php/s/EFkDxuDtAJwAgNO/download
+  - tar xzf efl_usr.tar.xz -C /~
+  - autoreconf -vid
+  - ./configure
+  - make
+  - scan-build make
+
